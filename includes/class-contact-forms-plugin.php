@@ -20,7 +20,7 @@
     private static $instance  = null;
 
     /**
-     * Installation class instance.
+     * Plugins Installation class instance.
      */
     private $installationInstance ;
 
@@ -29,7 +29,7 @@
      * 
      * @since 1.0.1
      */
-    private function __construct(){
+    private function __construct() {
 
     //setting up autoloader
     // require_once dirname( __FILE__ ) .'/autoloader.php';
@@ -41,10 +41,10 @@
     /**
      * Function to return the instance if available.
      *
-     * @return void
+     * @return self
      * @since 1.0.1
      */
-    public static function getInstance():self {
+    public static function getInstance(): self {
 
       if( is_null( self::$instance ) ) {
         self::$instance = new self();
@@ -56,22 +56,22 @@
      * Hook for actions and filters.
      * 
      * @since 1.0.1
+     * @return void
      */
-    private function init_hooks(){
+    private function init_hooks(): void {
 
       /**
        * Registrations
        */
-
-       //activation hook
-      register_activation_hook( CFP_PLUGIN_FILE, array( $this->installationInstance , 'install' ) );
+     
+      
+       //activation hook registration
+      register_activation_hook( CFP_PLUGIN_FILE , array( $this, 'activate_plugin' ) );
 
       /**
        * Actions
        */
 
-       //gets installation class instance : Used for registration in activation hook
-       add_action( 'init' , array( $this , 'getInstallationInstance' ) );
 
 
 
@@ -81,29 +81,27 @@
 
     }
 
-
-
-
-
-     /**
-  * Handles activation and deactivation jobs for CFP plugins.
-  *
-  * @return 
-  */
-//  function cfp_init_and_terminate_job(){
-
-//  }
-
-
     /**
      * Gets installation instance form CFP_Install class
      * 
      */
     public function getInstallationInstance ( ) {
-      if ( ! class_exists( 'CFP_Install' ) ) {
-        include_once CFP_PLUGIN_FILE . '/includes/class-cfp-install.php';
+      if ( ! class_exists( 'Cfp_Install' ) ) {
+        include_once dirname(CFP_PLUGIN_FILE) . '/includes/class-cfp-install.php';
       }
-      $this->installationInstance = new CFP_Install();
+      
+      $this->installationInstance = new Cfp_Install();
+
+    }
+
+    /**
+     * Plugin activation jobs : Handled by CFP_Install calss in includes/class-cfp-intall.php
+     */
+    public function activate_plugin() {
+      
+      $this->getInstallationInstance();
+      $this->installationInstance->install();
+
     }
 
 

@@ -11,21 +11,14 @@
  /**
   * CFP_Install class
   */
-  class CFP_Install {
-
-  /**
-   * Constructor
-   */
-   public function __construct() {
-   
-   }
+  class Cfp_Install {
    
    /**
     * Installation starts form here
     */
     public function install() {
-     
-      $this -> flushRewriteRules();
+
+     $this -> flushRewriteRules();
     }
    
    /**
