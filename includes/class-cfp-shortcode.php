@@ -72,7 +72,7 @@
         array (  
           'ajax_url' => admin_url( 'admin-ajax.php' ),
           'current_user_id' => get_current_user_id(),
-          'cfp_nonce' => wp_create_nonce ( 'wp_ajax_submit_cfp_form_action' )
+          'cfp_nonce' => wp_create_nonce ( 'wp_ajax_submit_cfp_form_action_secure_themegrill9988' )
         )
       );
 

@@ -25,14 +25,19 @@ class CFP_Formhandler {
     $email   = sanitize_email( $formData["email"] );
     $subject = sanitize_text_field( $formData["subject"] );
     $message = sanitize_textarea_field( $formData["message"] );
+    $nonce = $_POST["nonce"];
     
     $dataFromUser = array(
       $name,
       $email,
       $subject,
-      $message
+      $message,
+      $nonce
     );
-  error_log(print_r($_POST , true));
+    error_log(print_r($dataFromUser , true));
+
+    //nonce check
+  self :: verify_nonce ( $nonce );
 
   
  
@@ -42,5 +47,20 @@ class CFP_Formhandler {
         "data" => $dataFromUser
       )
     );
+  }
+
+  /**
+   * Verifies the nonce provided to the form
+   */
+  private static function verify_nonce ( $nonce) {
+   error_log(print_r($nonce , true));
+    if ( ! wp_verify_nonce( $nonce , 'wp_ajax_submit_cfp_form_action_secure_themegrill9988') ) {
+      wp_send_json_error( 
+        array ( 
+          "message" => esc_html__ ( "Nonce not verified. Please reload." )
+         )
+       );
+       exit;
+    }
   }
 }
