@@ -10,6 +10,9 @@
  * License: GPLv2 or Later
  */
 
+ //custom file includer to include files 
+require_once __DIR__ .'/file-includer.php';
+
  if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

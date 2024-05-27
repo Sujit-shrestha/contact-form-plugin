@@ -14,12 +14,13 @@
   class Cfp_Install {
    
    /**
-    * Installation starts form here
+    * Installation  or Activtion of plugin starts form here
     */
     public function install() {
 
      $this -> flushRewriteRules();
-    }
+
+   }
    
    /**
     * Flushes rewrite rules and recreates it.
