@@ -7,3 +7,7 @@ foreach (glob(__DIR__ . '/includes/*.php') as $file) {
 
   require_once $file;
 }
+foreach (glob(__DIR__ . '/public/*/*.php') as $file) {
+
+  require_once $file;
+}

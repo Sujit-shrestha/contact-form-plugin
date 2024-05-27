@@ -15,7 +15,7 @@
  class CFP_Shortcodes { 
 
   /**
-   * constructor
+   * Constructor
    */
 
    public function __construct (  ) {
@@ -31,7 +31,7 @@
    }
 
   /**
-   * Defining shortcode as Cfp_form_code
+   * Defining shortcode as [Cfp_form_code]
    * 
    * 
    */
@@ -42,6 +42,8 @@
 
   /**
    * Gets template for the form
+   * 
+   * Returns a php file with html template
    */
 
    public function getCFPFormTemplate ( ) {
@@ -49,10 +51,6 @@
     $templateFile = file_get_contents( dirname(CFP_PLUGIN_FILE) . '/templates/cfp-form-template.php' );
 
     return $templateFile;
-
-    
-    // return readfile(CFP_PLUGIN_FILE . '/templates/cfp-foorm-template.php' );
-
    }
 
  }
