@@ -77,12 +77,19 @@
        * Actions
        */
 
+      
 
 
 
       /**
        * Filters
        */
+
+
+       /**
+        * Initiate class
+        */
+        $this->classInstantionations ( );
 
     }
 
@@ -114,6 +121,15 @@
 
       $this -> deactivationInstance = CFP_Deactivate :: getDeactivationInstance ( );
       $this -> deactivationInstance -> deactivate ( );
+    }
+
+    /**
+     * Class instantiations
+     */
+    public function classInstantionations () {
+      //shortcode class initialization
+      new CFP_Shortcodes( );
+
     }
 
 

@@ -32,7 +32,7 @@
     */
   public static function getDeactivationInstance ( ) : self {
 
-        if( is_null( self :: $deactivationInstance ) ) {
+   if( is_null( self :: $deactivationInstance ) ) {
           $deactivationInstance = new self();
         }
     
