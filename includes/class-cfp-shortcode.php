@@ -19,13 +19,13 @@
    */
 
    public function __construct (  ) {
-
     /**
      * Actions
      */
 
     add_action( 'init' , array( $this , 'shortcode_define' ) );
 
+    add_action( 'wp_enqueue_scripts' , array( $this , 'enqueueCpfFormHandlerScripts' ) );
     
 
    }
@@ -52,5 +52,27 @@
 
     return $templateFile;
    }
+
+   /**
+    * Gets the form handling scripts
+
+    *@return void
+    */
+    public function enqueueCpfFormHandlerScripts () {
+
+      wp_enqueue_script( 'csutomjs' , plugins_url( 'contact-form-plugin/public/js/cfp-form-handler.js' , 'contact-form-plugin' ) , [ 'jquery' ] , '1.0.1' );
+
+      //localization for ajax request 
+      wp_localize_script(
+        'customjs' ,
+        esc_html__ ( 'my_ajax_obj' ),
+        array (  
+          'ajax_url' => admin_url( 'admin-ajax.php' ),
+          'current_user_id' => get_current_user_id(),
+          'cfp_nonce' => wp_create_nonce ( 'cfp_secure_nonce' )
+        )
+      );
+
+    }
 
  }

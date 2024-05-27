@@ -24,7 +24,7 @@ defined('ABSPATH') || exit;
 <body>
   <div class="cfp_form_wrapper ">
     <div class="shadow py-6 bg-red-50">
-      <form id="cfp_form_template" action="#" method="POST">
+      <form id="cfp_form_template" >
 
         <table style="border: 1px solid red">
 
