@@ -25,14 +25,16 @@
     private $installationInstance ;
 
     /**
+     * Plugins deactivation class instance
+     */
+    private $deactivationInstance ;
+
+    /**
      * Privating constructor to make single instance available for use i.e. ( Singleton pattern ).
      * 
      * @since 1.0.1
      */
     private function __construct() {
-
-    //setting up autoloader
-    // require_once dirname( __FILE__ ) .'/autoloader.php';
 
     $this->init_hooks();
 
@@ -68,6 +70,9 @@
        //activation hook registration
       register_activation_hook( CFP_PLUGIN_FILE , array( $this, 'activate_plugin' ) );
 
+      //deactivation hook registration
+      register_deactivation_hook( CFP_PLUGIN_FILE , array ( $this , 'deactivate_plugin' ) );
+
       /**
        * Actions
        */
@@ -86,22 +91,29 @@
      * 
      */
     public function getInstallationInstance ( ) {
-      if ( ! class_exists( 'Cfp_Install' ) ) {
-        include_once dirname(CFP_PLUGIN_FILE) . '/includes/class-cfp-install.php';
-      }
       
       $this->installationInstance = new Cfp_Install();
 
     }
+
 
     /**
      * Plugin activation jobs : Handled by CFP_Install calss in includes/class-cfp-intall.php
      */
     public function activate_plugin() {
       
-      $this->getInstallationInstance();
-      $this->installationInstance->install();
+      $this -> getInstallationInstance ( );
+      $this -> installationInstance -> install ( );
 
+    }
+
+    /**
+     * Plugin deactivation jobs init : 
+     */
+    public function deactivate_plugin () {
+
+      $this -> deactivationInstance = CFP_Deactivate :: getDeactivationInstance ( );
+      $this -> deactivationInstance -> deactivate ( );
     }
 
 
