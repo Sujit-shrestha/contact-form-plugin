@@ -39,14 +39,44 @@
         return $deactivationInstance;
       }
 
-      /**
-       * DEactivation jobs handler
+ /**       
+  * DEactivation jobs handler
+       * 
+       * @return void
        */
   public function deactivate ( ) {
 
-        flush_rewrite_rules (  ) ;
+    $this -> flushRewriteRules ( );
 
-      }
-    }
+    $this -> updateOption ( );
+
+  }
+
+  /**
+   * flush rewrite
+   * 
+   */
+  public function flushRewriteRules () {
+
+    flush_rewrite_rules (  ) ;
+
+  }
+
+  /**
+   * Delete the option on deactivation
+   */
+  public function updateOption () {
+    
+    //set plugin deactivation denotation in option table
+
+    delete_option( "cfp_plugin_activated" );
+    
+
+  }
+
+
+  
+
+}
 
  

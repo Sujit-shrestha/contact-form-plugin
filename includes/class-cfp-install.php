@@ -19,8 +19,8 @@
     public function install() {
 
      $this -> flushRewriteRules();
-
-     $this ->tableCreation ( );
+     $this -> setOption();
+     $this -> tableCreation ();
 
    }
    
@@ -33,9 +33,25 @@
      
       flush_rewrite_rules();
    }
+   /**
+    * Set activation key in options table
+    *
+    * @return void
+    */
+
+    private function setOption ( ) {
+       //set plugin activated denotation in option table
+     if ( ! get_option( "cfp_plugin_activated" ) ) {
+
+      add_option( "cfp_plugin_activated", "true" );
+
+      }
+    }
 
    /**
     * Create table if not exists
+    *
+    * Simple table creation logic which can be further made better by checking the individual columns of already existing table in case already existing table is missing an  cokumsn
     */
     private function tableCreation ( ) {
 
@@ -56,8 +72,10 @@
             form_creted_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
          )
          ";
-         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-        dbDelta( $tableCreationQuery , true );
+
+      require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+      dbDelta( $tableCreationQuery , true );
 
     }
 
