@@ -21,6 +21,7 @@
      $this -> flushRewriteRules();
      $this -> setOption();
      $this -> tableCreation ();
+     $this -> insertDefaultValues ();
 
    }
    
@@ -55,13 +56,13 @@
     */
     private function tableCreation ( ) {
 
-
       global $wpdb;
 
-      $tablename = $wpdb->prefix ."cfp_form_entries";
+      $entriesTablename     = $wpdb->prefix ."cfp_form_entries";
+      $entriesMetaTablename = $wpdb->prefix ."cfp_form_entriesmeta";
 
-      $tableCreationQuery = "
-         CREATE TABLE IF NOT EXISTS $tablename (
+      $entriesTableCreationQuery = "
+         CREATE TABLE IF NOT EXISTS $entriesTablename (
             entry_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             form_id INT UNSIGNED NOT NULL,
             user_id INT UNSIGNED ,
@@ -73,10 +74,73 @@
          )
          ";
 
+      $entryMetaTableCreationQuery = "
+         CREATE TABLE IF NOT EXISTS $entriesMetaTablename (
+            meta_id INT UNSIGNED NOT NULL AUTO_INCREMENT
+            PRIMARY KEY,
+            validation_key varchar(40) ,
+            value varchar(500)
+         )
+         ";
+      
+
       require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-      dbDelta( $tableCreationQuery , true );
+      dbDelta( $entriesTableCreationQuery    , true );
+      dbDelta( $entryMetaTableCreationQuery  , true );
 
     }
+
+    /**
+     * Inserts default validation values into meta table
+     * 
+     * @return void
+     */
+   
+   private function insertDefaultValues () {
+      global $wpdb;
+
+      $metaTableName = $wpdb->prefix ."cfp_form_entriesmeta";
+
+      $validationData =  array( 
+         'default_invalid_input'          => "Enter a valid input", 
+
+         'email_invalid_input_format'     => "Please enter a valid email.", 
+         'name_invalid_input_format'      => "Please enter a valid name.",
+         'subject_invalid_input_format'   => "Please enter proper subject.",
+         'message_invalid_input_format'   => "Please enter a valid message",
+
+         'email_invalid_input_length'     => "Length of email should be in range of 1 to 40 characters.",
+         'name_invalid_input_length'      => "Length of name should be in range of 1 to 40 characters.",
+         'subject_invalid_input_length'   => "Length of subbject should be in range of 1 to 100 characters.",
+         'message_invalid_input_length'   => "Length of message should be in range of 0 to 3000.",
+
+         'default_required'               => "This is a required field",
+         'email_required'                 => "Email is a required field.",
+         'name_required'                  => "Name is a required field.",
+         'subject_required'               => "Subject is a required field.",
+         'message_required'               => "Message is a required field.",
+         'test' =>'fdsaf',
+         'next' => 'tjis'
+      ) ;
+
+      foreach( $validationData as $k => $v ){
+
+         $checkIfExists = $wpdb->get_results( "SELECT 'meta_id'  from $metaTableName WHERE validation_key = '$k'" );
+        
+         if ( ! empty( $checkIfExists ) ) {
+         
+         continue;
+         }
+        
+         $wpdb->insert(
+            $metaTableName,
+            array(
+               "validation_key"  => $k,
+               "value"           => $v
+            )
+         );
+      }
+   } 
 
   }

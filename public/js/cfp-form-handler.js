@@ -1,30 +1,32 @@
 
-jQuery(document).on("click", '#wordpress_ajax_form_btn',
+jQuery(document).on("click", '#cfp_form_btn',
 	function (event) {
 		event.preventDefault();
 
-		var form = jQuery('#wordpress_ajax_form').serialize();
-
+		var form = jQuery('#cfp_form_template').serialize();
+    
 		jQuery.ajax({
-			url: my_ajax_obj.ajax_url,
+      
+			url: cfp_jquery_object.ajax_url,
 			data: {
 				'data': form,
-				'action': 'custom_action',
-				'author': my_ajax_obj.current_user_id,
-				'nonce': my_ajax_obj.rua_nonce
+				'action': 'submit_cfp_form_action',
+				'author': cfp_jquery_object.current_user_id,
+				'nonce': cfp_jquery_object.cfp_nonce
 
 			},
 			type: 'post',
 			success: function (result) {
 
+    
 				if (!result.success) {
 
-					window.location.replace(result.data.redirect_url);
+					
 
 				} else {
 
 					//Providing success message to the user
-					jQuery("#wordpress_ajax_form").html("<h3>Role Added successfully. </h3>");
+					jQuery("#cfp_form_template").html("<h3>Thanks for submittion of the form. We will get back to you soon. </h3>");
 
 				}
 

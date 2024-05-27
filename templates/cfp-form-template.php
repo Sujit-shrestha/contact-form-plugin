@@ -24,7 +24,7 @@ defined('ABSPATH') || exit;
 <body>
   <div class="cfp_form_wrapper ">
     <div class="shadow py-6 bg-red-50">
-      <form id="cfp_form_template" >
+      <form id="cfp_form_template" action="" method="post" >
 
         <table style="border: 1px solid red">
 
@@ -46,8 +46,7 @@ defined('ABSPATH') || exit;
             <td class="px-6 py-3">
               <input
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email" name="email" id="cfp_from_email" placeholder="Enter your email..." required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$ ">
+                type="email" name="email" id="cfp_from_email" placeholder="Enter your email..." required >
             </td>
           </tr>
 
@@ -68,7 +67,7 @@ defined('ABSPATH') || exit;
             </td>
             <td class="px-6 py-3">
               <textarea id="cfp_form_message" rows="4"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="message"
                 placeholder="Write your message here..."></textarea>
 
             </td>

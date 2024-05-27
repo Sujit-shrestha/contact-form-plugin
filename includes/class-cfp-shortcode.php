@@ -26,6 +26,9 @@
     add_action( 'init' , array( $this , 'shortcode_define' ) );
 
     add_action( 'wp_enqueue_scripts' , array( $this , 'enqueueCpfFormHandlerScripts' ) );
+
+    //form action handler
+    add_action( 'wp_ajax_submit_cfp_form_action' , array ( 'CFP_Formhandler' , 'handleForm'  ) );
     
 
    }
@@ -60,18 +63,27 @@
     */
     public function enqueueCpfFormHandlerScripts () {
 
-      wp_enqueue_script( 'csutomjs' , plugins_url( 'contact-form-plugin/public/js/cfp-form-handler.js' , 'contact-form-plugin' ) , [ 'jquery' ] , '1.0.1' );
+      wp_enqueue_script( 'customjs' , plugins_url( 'contact-form-plugin/public/js/cfp-form-handler.js' , 'contact-form-plugin' ) , [ 'jquery' ] , '1.0.1' );
 
       //localization for ajax request 
       wp_localize_script(
         'customjs' ,
-        esc_html__ ( 'my_ajax_obj' ),
+        'cfp_jquery_object',
         array (  
           'ajax_url' => admin_url( 'admin-ajax.php' ),
           'current_user_id' => get_current_user_id(),
-          'cfp_nonce' => wp_create_nonce ( 'cfp_secure_nonce' )
+          'cfp_nonce' => wp_create_nonce ( 'wp_ajax_submit_cfp_form_action' )
         )
       );
+
+    }
+    /**
+     * Handling of the data form the form 
+     */
+    public function handleFormData () {
+
+      $formHandler = new CFP_Formhandler ( );
+
 
     }
 
