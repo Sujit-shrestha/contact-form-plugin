@@ -3,6 +3,7 @@
 /**
  * Template for the CFP form
  * 
+ * @version 1.0.1
  */
 
 defined('ABSPATH') || exit;

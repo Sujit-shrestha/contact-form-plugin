@@ -2,6 +2,8 @@
 
 /**
  * Handles the form data
+ * 
+ * @version 1.0.1
  */
 
  defined( 'ABSPATH' ) || exit;
@@ -100,8 +102,8 @@ class CFP_Formhandler {
     if ( ! wp_verify_nonce( $nonce , 'wp_ajax_submit_cfp_form_action_secure_themegrill9988') ) {
       wp_send_json_error( 
         array ( 
-          "message" => esc_html__ ( "Nonce not verified. Please reload." ),
-          "display_div_id_suffix" => esc_html( "default" )
+          "message"                 => esc_html__ ( "Nonce not verified. Please reload." ),
+          "display_div_id_suffix"   => esc_html( "default" )
          )
        );
        exit;
