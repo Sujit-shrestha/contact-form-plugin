@@ -21,7 +21,7 @@
      $this -> flushRewriteRules();
      $this -> setOption();
      $this -> tableCreation ();
-     $this -> insertDefaultValues ();
+   //   $this -> insertDefaultValues ();
 
    }
    
@@ -64,11 +64,11 @@
       $entriesTableCreationQuery = "
          CREATE TABLE IF NOT EXISTS $entriesTablename (
             entry_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            form_id INT UNSIGNED NOT NULL,
+            form_id varchar(100) NOT NULL,
             user_id INT UNSIGNED ,
             name varchar(40) NOT NULL,
             email varchar(40) NOT NULL,
-            subject varchar(100) ,
+            subject varchar(400) ,
             message TEXT,
             form_creted_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
          )
@@ -119,9 +119,8 @@
          'email_required'                 => "Email is a required field.",
          'name_required'                  => "Name is a required field.",
          'subject_required'               => "Subject is a required field.",
-         'message_required'               => "Message is a required field.",
-         'test' =>'fdsaf',
-         'next' => 'tjis'
+         'message_required'               => "Message is a required field."
+
       ) ;
 
       foreach( $validationData as $k => $v ){

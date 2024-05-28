@@ -24,18 +24,23 @@ defined('ABSPATH') || exit;
 <body>
   <div class="cfp_form_wrapper ">
     <div class="shadow py-6 bg-red-50">
-      <form id="cfp_form_template" action="" method="post" >
+      <form id="cfp_form_template_101" action="" method="post" >
 
-        <table style="border: 1px solid red">
+        <table>
 
           <tr>
-            <td class="px-6 py-3">
+            <td class="px-6 py-3" id="cfp_test_name">
               <label name="name " for="name">Name</label>
             </td>
             <td class="px-6 py-3">
               <input
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text" name="name" id="cfp_from_name" placeholder="Enter your name..." required>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-6 py-3 " colspan="2">
+              <span id="cfp_validation_message_displayer_name" > </span>
             </td>
           </tr>
 
@@ -46,7 +51,12 @@ defined('ABSPATH') || exit;
             <td class="px-6 py-3">
               <input
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email" name="email" id="cfp_from_email" placeholder="Enter your email..." required >
+                type="email" name="email" id="cfp_from_email" placeholder="Enter your email..." required  >
+            </td>
+          </tr>
+          <tr>
+            <td class="px-6 py-3 " colspan="2">
+              <span id="cfp_validation_message_displayer_email" > </span>
             </td>
           </tr>
 
@@ -58,6 +68,11 @@ defined('ABSPATH') || exit;
               <input
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text" name="subject" id="cfp_form_subject" placeholder="Enter subject of query...">
+            </td>
+          </tr>
+          <tr>
+            <td class="px-6 py-3 " colspan="2">
+              <span id="cfp_validation_message_displayer_subject" > </span>
             </td>
           </tr>
 
@@ -72,12 +87,23 @@ defined('ABSPATH') || exit;
 
             </td>
           </tr>
+          <tr>
+            <td class="px-6 py-3 " colspan="2">
+              <span id="cfp_validation_message_displayer_message" > </span>
+            </td>
+          </tr>
 
           <tr>
             <td class="px-6 py-3 ">
               <input id="cfp_form_btn"
                 class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500  rounded"
                 type="submit" value="Send Quote" />
+            </td>
+          </tr>
+
+          <tr>
+            <td class="px-6 py-3 " colspan="2">
+              <span id="cfp_validation_message_displayer_default" > </span>
             </td>
           </tr>
 
