@@ -76,7 +76,7 @@
       /**
        * Actions
        */
-
+      add_action( 'init' , array( 'CFP_Admin_Menus' , 'createInstance' ) );
       
 
 
@@ -131,8 +131,5 @@
       new CFP_Shortcodes( );
 
     }
-
-
-
-
+    
   }
