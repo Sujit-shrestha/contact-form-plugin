@@ -33,7 +33,7 @@
          if ( ! isset ( $data[$k] ) ) {
           
            $validation[$k] = array(
-             "message"               => esc_html__( "This is a requried field." ),
+             "message"               => esc_html__( "This is a requried field."  , 'contact-form-plugin-cfp-themegrill' ),
              "display_div_id_suffix" => $k
            );
          }
@@ -44,7 +44,7 @@
          if (  empty ( $data[$k] ) ) {
            
            $validation[$k] = array(
-             "message"               => esc_html__( "The field cannot be empty." ),
+             "message"               => esc_html__( "The field cannot be empty." , 'contact-form-plugin-cfp-themegrill' ),
              "display_div_id_suffix" => $k
            );
          }
@@ -64,7 +64,7 @@
          if ( $inputLength > $maxAllowedLength[$k] ) {
         
            $validation[$k] = array(
-             "message"               => esc_html__( "The field has exceeded max length." ),
+             "message"               => esc_html__( "The field has exceeded max length." , 'contact-form-plugin-cfp-themegrill' ),
              "display_div_id_suffix" => $k
            );
          }
@@ -84,7 +84,7 @@
          if ( $inputLength < $minAllowedLength[$k] ) {
  
            $validation[$k] = array(
-             "message"               => esc_html__( "The field should have at least length of $minAllowedLength[$k]." ),
+             "message"               => esc_html__( "The field should have at least length of $minAllowedLength[$k]." , 'contact-form-plugin-cfp-themegrill' ),
              "display_div_id_suffix" => $k
            );
          }
@@ -109,7 +109,7 @@
  
          isValidEmail( $data[$k] ) ? array( ) : 
          $validation[$k] = array(
-           "message"               => esc_html__( "Email is not valid" ),
+           "message"               => esc_html__( "Email is not valid" , 'contact-form-plugin-cfp-themegrill' ),
            "display_div_id_suffix" => $k
          );
          continue;
@@ -120,7 +120,7 @@
        //sending all validation data at once
        wp_send_json_error(
                array(
-                 "message"          => esc_html__( "Validation errors foind." ),
+                 "message"          => esc_html__( "Validation errors foind." , 'contact-form-plugin-cfp-themegrill' ),
                  "validation_error" => $validation,
                  "data"             => $data
                )

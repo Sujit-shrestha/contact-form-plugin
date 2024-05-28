@@ -64,7 +64,7 @@ class CFP_Formhandler {
     $validationResponseIsTrue = CFP_Validation :: validate_data ( $dataFromUser  , $keys );
 
 
-  //save in database
+    //save in database
 
     if( $validationResponseIsTrue ) {
       $dbOperationInstance = CFP_DbOperations :: getInstance();
@@ -77,7 +77,7 @@ class CFP_Formhandler {
       //despite its an eror message  , following funciotn is used to send the message directly on the place of form.
       wp_send_json_success(
         array(
-          "message"   => esc_html__( $responseFromDatabase ),
+          "message"   => esc_html__( $responseFromDatabase , 'contact-form-plugin-cfp-themegrill' ),
           "data"      => $dataFromUser
         )
       );
@@ -86,7 +86,7 @@ class CFP_Formhandler {
     //reaches here if everything is on par : success
     wp_send_json_success(
       array(
-        "message" => esc_html__( "Thanks for submission of the form. We are glad to get your thoughts. We will get back to you soon."),
+        "message" => esc_html__( "Thanks for submission of the form. We are glad to get your thoughts. We will get back to you soon." , 'contact-form-plugin-cfp-themegrill' ),
         "data"    => $dataFromUser
       )
     );
@@ -102,7 +102,7 @@ class CFP_Formhandler {
     if ( ! wp_verify_nonce( $nonce , 'wp_ajax_submit_cfp_form_action_secure_themegrill9988') ) {
       wp_send_json_error( 
         array ( 
-          "message"                 => esc_html__ ( "Nonce not verified. Please reload." ),
+          "message"                 => esc_html__ ( "Nonce not verified. Please reload."  , 'contact-form-plugin-cfp-themegrill' ),
           "display_div_id_suffix"   => esc_html( "default" )
          )
        );
