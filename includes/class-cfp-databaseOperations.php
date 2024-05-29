@@ -45,7 +45,7 @@ class CFP_DbOperations {
    * Saving in database
    * 
    * @param array
-   * @return ..bool
+   * @return mixed
    */
   public function save( array $data ) {
 
@@ -74,5 +74,69 @@ class CFP_DbOperations {
     }
     return "Something went wrong. Please reload and submit the form agian. Thank you.";
     
+  }
+
+  /**
+   * Gets the columns available in the table
+   * 
+   * @return array
+   */
+  public function get_columns () : array {
+
+    global $wpdb;
+    $tableName = $wpdb->prefix . $this->entriesTablenameSuffix;
+
+    $colums_available = $wpdb->get_col(" DESC $tableName");
+
+    return $colums_available;
+
+  }
+
+  /**
+   * Gets all the data from database
+   * 
+   * @return mixed
+   */
+  public function get_data ( ...$options)  {
+    global $wpdb;
+    $tableName = $wpdb->prefix . $this->entriesTablenameSuffix;
+
+    $defaultConstraints = array( 
+      "orderby" => 'entry_id' ,
+      "sortorder"   => 'ASC' ,
+      "limit"       => 50,
+     
+    );
+
+    $parameter = array_merge($defaultConstraints , ...$options);
+
+    $query = "
+    SELECT * FROM $tableName 
+    WHERE true 
+    ";
+
+    $searchKeyword = $parameter["searchKeyword"];
+    $searchColumns = ['entry_id', 'form_id', 'user_id', 'email', 'subject', 'message'];
+
+
+    $whereClause = "";
+    if ( ! empty( $searchKeyword ) ) {
+        foreach ( $searchColumns as $column ) {
+          $whereClause .= "$column LIKE '%$searchKeyword%' OR ";
+        }
+        $whereClause = rtrim( $whereClause, " OR " );
+
+        if ( ! empty( $whereClause ) ) {
+          $query .= " AND 
+         ( $whereClause )
+        ";
+        }
+      }
+
+    $query .= " ORDER BY `$parameter[orderby]` $parameter[sortorder] ";
+
+    $data = $wpdb->get_results( $query );
+
+    return $data;
   }
 }

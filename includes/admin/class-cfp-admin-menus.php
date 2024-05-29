@@ -56,7 +56,7 @@
       esc_html__( "Entries" , 'contact-form-plugin-cfp-themegrill' ),
       'manage_options' ,
       'cfp_admin_main_menu',
-      array( $this , 'entriesInit' ) ,
+      array( $this , 'displayData' ) ,
       
 
     );
@@ -75,7 +75,17 @@
    * Custom table display
    */
   public function displayData () {
-    
+
+    $formEntriesDisplay = new CFP_Display_Entries();
+
+    ?>
+     <div class="wrap">
+           <h2>Form Entries</h2>
+           <?php $formEntriesDisplay -> init (); ?>
+       </div>
+    <?php
+
+
   }
 
   /**
