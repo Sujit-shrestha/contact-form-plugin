@@ -56,9 +56,19 @@
       esc_html__( "Entries" , 'contact-form-plugin-cfp-themegrill' ),
       'manage_options' ,
       'cfp_admin_main_menu',
-       array( $this , 'entriesInit' ) ,
+      array( $this , 'entriesInit' ) ,
       
 
+    );
+
+    add_submenu_page(
+      'cfp_admin_main_menu',
+      esc_html__( "Settings" , 'contact-form-plugin-cfp-themegrill' ),
+      esc_html__( "Settings" , 'contact-form-plugin-cfp-themegrill' ),
+      'manage_options' ,
+      'cfp_admin_settings_submenu',
+      array( $this , 'entriesInit' ) ,
+      
     );
   }
 
@@ -66,8 +76,20 @@
    * Initiates CFP_Entries
    */
   public function entriesInit () {
-   $displayInstance =  new CFP_Entries_Display();
-   $displayInstance -> template();
+  //  $displayInstance =  new CFP_Entries_Display();
+  //  $displayInstance -> template();
+
+   $exampleListTable = new CFP_Entries_Display();
+   $exampleListTable->prepare_items();
+   ?>
+       <div class="wrap">
+           <div id="icon-users" class="icon32"></div>
+           <h2>Example List Table Page</h2>
+           <?php $exampleListTable->display(); ?>
+           
+       </div>
+   <?php
+
   }
 
  

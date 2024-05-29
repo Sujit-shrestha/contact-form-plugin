@@ -23,6 +23,12 @@ if ( ! defined( 'CFP_PLUGIN_FILE' ) ) {
  
 }
 
+//defineing Contact Form Plugin text domain
+if( ! defined( 'CFP_text_domain' ) ){
+  define ( 'CFP_text_domain' , 'contact-form-plugin-cfp-themegrill' );
+
+}
+
 //Including the main class for ContctFormPlugin
 if ( ! class_exists( 'ContactFormsPlugin' ) ) {
   require_once dirname( __FILE__ ) . '/includes/class-contact-forms-plugin.php';
