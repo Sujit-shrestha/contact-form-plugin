@@ -12,7 +12,16 @@
    */
   public function __construct() {
 
+    add_action( 'admin_enqueue_scripts' , array( 'CFP_Display_Entries' , 'admin_enqueuing' ) );
+
+    add_action( 'wp_ajax_admin_entries_search_action' , array( 'CFP_Display_Entries' , 'handle_search' ) );
+    
+    add_action( 'wp_ajax_admin_entries_sort_action' , array( 'CFP_Display_Entries' , 'handle_sort' ) );
+
+
+
     $this -> initHooks ();
+
   }
   /**
    * Creates instance
@@ -31,6 +40,7 @@
      * Actions
      */
     add_action ( 'admin_menu' , array( $this , 'admin_menu' ) ) ;
+
    }
   
   /**
@@ -38,8 +48,8 @@
    */
   public function admin_menu () {
     add_menu_page (
-      esc_html__( 'CFP Forms' , 'contact-form-plugin-cfp-themegrill' ),
-      esc_html__( 'CFP Forms' , 'contact-form-plugin-cfp-themegrill'),
+      esc_html__( 'CFP Forms' , CFP_text_domain ),
+      esc_html__( 'CFP Forms' , CFP_text_domain),
       'manage_options' ,
       'cfp_admin_main_menu',
       null ,
@@ -52,8 +62,8 @@
     
     add_submenu_page(
       'cfp_admin_main_menu',
-      esc_html__( "Entries" , 'contact-form-plugin-cfp-themegrill' ),
-      esc_html__( "Entries" , 'contact-form-plugin-cfp-themegrill' ),
+      esc_html__( "Entries" , CFP_text_domain ),
+      esc_html__( "Entries" , CFP_text_domain ),
       'manage_options' ,
       'cfp_admin_main_menu',
       array( $this , 'displayData' ) ,
@@ -77,10 +87,9 @@
   public function displayData () {
 
     $formEntriesDisplay = new CFP_Display_Entries();
-
     ?>
      <div class="wrap">
-           <h2>Form Entries</h2>
+           <h2><?php esc_html_e("Form Entries" , CFP_text_domain);?></h2>
            <?php $formEntriesDisplay -> init (); ?>
        </div>
     <?php
@@ -92,15 +101,14 @@
    * Display using wp_list_table 
    */
   public function entriesInit () {
-  //  $displayInstance =  new CFP_Entries_Display();
-  //  $displayInstance -> template();
+  
 
    $exampleListTable = new CFP_Entries_Display_using_WPListTable();
    $exampleListTable->prepare_items();
    ?>
        <div class="wrap">
            <div id="icon-users" class="icon32"></div>
-           <h2>Example List Table Page</h2>
+           <h2><?php esc_html_e('Example List Table Page' , CFP_text_domain ); ?></h2>
            <?php $exampleListTable->display(); ?>
            
        </div>

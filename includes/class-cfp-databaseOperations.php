@@ -97,26 +97,28 @@ class CFP_DbOperations {
    * 
    * @return mixed
    */
-  public function get_data ( ...$options)  {
+  public function get_data ( $options)  {
     global $wpdb;
     $tableName = $wpdb->prefix . $this->entriesTablenameSuffix;
 
     $defaultConstraints = array( 
       "orderby" => 'entry_id' ,
       "sortorder"   => 'ASC' ,
-      "limit"       => 50,
-     
+      "limit"       => 5,
     );
 
-    $parameter = array_merge($defaultConstraints , ...$options);
+    $parameter = array_merge($defaultConstraints , $options);
+    
+        error_log( print_r($options , true) );
+
 
     $query = "
     SELECT * FROM $tableName 
     WHERE true 
     ";
 
-    $searchKeyword = $parameter["searchKeyword"];
-    $searchColumns = ['entry_id', 'form_id', 'user_id', 'email', 'subject', 'message'];
+    $searchKeyword = $parameter["searchKeyword"] ?? null;
+    $searchColumns = ['entry_id', 'form_id', 'user_id', 'name', 'email', 'subject', 'message'];
 
 
     $whereClause = "";
@@ -134,6 +136,7 @@ class CFP_DbOperations {
       }
 
     $query .= " ORDER BY `$parameter[orderby]` $parameter[sortorder] ";
+
 
     $data = $wpdb->get_results( $query );
 
