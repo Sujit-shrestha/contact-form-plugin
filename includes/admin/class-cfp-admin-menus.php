@@ -63,23 +63,29 @@
 
     add_submenu_page(
       'cfp_admin_main_menu',
-      esc_html__( "Settings" , 'contact-form-plugin-cfp-themegrill' ),
-      esc_html__( "Settings" , 'contact-form-plugin-cfp-themegrill' ),
+      esc_html__( "Test" , 'contact-form-plugin-cfp-themegrill' ),
+      esc_html__( "Test" , 'contact-form-plugin-cfp-themegrill' ),
       'manage_options' ,
       'cfp_admin_settings_submenu',
       array( $this , 'entriesInit' ) ,
       
     );
   }
+  /**
+   * Custom table display
+   */
+  public function displayData () {
+    
+  }
 
   /**
-   * Initiates CFP_Entries
+   * Display using wp_list_table 
    */
   public function entriesInit () {
   //  $displayInstance =  new CFP_Entries_Display();
   //  $displayInstance -> template();
 
-   $exampleListTable = new CFP_Entries_Display();
+   $exampleListTable = new CFP_Entries_Display_using_WPListTable();
    $exampleListTable->prepare_items();
    ?>
        <div class="wrap">

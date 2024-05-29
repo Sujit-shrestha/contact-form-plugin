@@ -11,7 +11,7 @@
  }
   
 
- class CFP_Entries_Display extends \WP_List_Table  {
+ class CFP_Entries_Display_using_WPListTable extends \WP_List_Table  {
   public $plugin_text_domain = CFP_text_domain ;
 
   
@@ -34,7 +34,7 @@
         'per_page'    => $perPage
     ) );
 
-    $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
+    $data = array_slice( $data , ( ( $currentPage-1 ) * $perPage ) , $perPage ) ;
 
     $this->_column_headers = array($columns, $hidden, $sortable);
     $this->items = $data;
