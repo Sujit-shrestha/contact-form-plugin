@@ -25,7 +25,9 @@ jQuery(document).on("submit", '#cfp_form_template_101',
 
 					//displays the validation messages dynamically in the respective hidden fields
 					validationArray = result.data.validation_error;
-
+					
+					jQuery(".cfp_validation_message_display_frontend" ).text("");
+					
 					for (const key in validationArray) {
 
 						jQuery("#cfp_validation_message_displayer_" + validationArray[key].display_div_id_suffix).html(validationArray[key].message);
