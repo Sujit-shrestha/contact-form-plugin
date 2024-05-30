@@ -6,6 +6,17 @@
 
  class CFP_Display_Entries {
   /**
+   * Single instance of entries class
+   *
+   * @var CFP_Display_Entries
+   */
+  private static $instance  = null;
+
+  /**
+   * Stores column number
+   */
+  public static $columnNumber  ;
+  /**
    * Constructor
    */
   public function __construct ( ) {
@@ -14,6 +25,19 @@
     add_action( 'cfp_admin_entries_render_search_template' , array( $this , 'render_search_template' ) );
   }
 
+  /**
+   * Function to return the instance if available
+   *
+   * @return self
+   * @since 1.0.1
+   */
+  public static function getInstance () : self {
+    if( is_null( self::$instance ) ) {
+      self::$instance = new self();
+    }
+    return self::$instance;
+    }
+  
   /**
    * Inititates the table rendering , data pulling task
    *
@@ -52,6 +76,8 @@
 
     $dbOps           = CFP_DbOperations :: getInstance ( ) ;
     $columsAvailable = $dbOps -> get_columns ( ) ;
+    self :: $columnNumber = count( $columsAvailable );
+
     $displayName = array( 
       "entry_id"        => "Entry ID" ,
       "form_id"         => "Form ID" ,
@@ -66,8 +92,6 @@
 
 <!DOCTYPE html>
 <html>
-
-
   <span id="cfp_show_nonce_error_message"></span>
   <table id="cfp_table_entries">
     <tr>
@@ -108,6 +132,10 @@
   public function render_table_rows( $constraints){
     $dbOps           = CFP_DbOperations :: getInstance ( ) ;
     $dataAvailable   = $dbOps -> get_data ( $constraints ) ;
+    if( empty( $dataAvailable ) ){
+      $this -> display_empty_table_message( ) ;
+      exit;
+    }
 
     $count = 0;
     foreach( $dataAvailable as $row ){
@@ -133,6 +161,19 @@
     <?php
     }
    
+  }
+  /**
+   * Displays empty table message
+   */
+  public function display_empty_table_message ( ) {
+
+    ?>
+    <tr id="cfp_no_entries_available_message">
+      <td align="center" colspan="<?php echo self:: $columnNumber ?? 9 ?>">
+        No entries available.
+      </td>
+    </tr>
+    <?php
   }
 
   /**
@@ -167,7 +208,7 @@
       $_POST["nonce"]
     );
       
-    $formEntriesDisplay = new self();
+    $formEntriesDisplay = CFP_Display_Entries :: getInstance ( ) ;
     
           $formEntriesDisplay -> render_table_rows (
             array(
@@ -185,7 +226,7 @@
     self:: verify_nonce(
       $_POST["nonce"]
     );
-    $formEntriesDisplay = new self () ;
+    $formEntriesDisplay = CFP_Display_Entries :: getInstance ( ) ;
     
     $formEntriesDisplay -> render_table_rows(
       array(

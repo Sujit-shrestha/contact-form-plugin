@@ -86,7 +86,7 @@
    */
   public function displayData () {
 
-    $formEntriesDisplay = new CFP_Display_Entries();
+    $formEntriesDisplay =  CFP_Display_Entries :: getInstance ( );
     ?>
      <div class="wrap">
            <h2><?php esc_html_e("Form Entries" , CFP_text_domain);?></h2>
@@ -102,7 +102,6 @@
    */
   public function entriesInit () {
   
-
    $exampleListTable = new CFP_Entries_Display_using_WPListTable();
    $exampleListTable->prepare_items();
    ?>
@@ -115,8 +114,6 @@
    <?php
 
   }
-
- 
 
   public static function get_icon_url( $fill = '#82878c', $base64 = true ) {
 		$svg = '<svg fill="#000000" width="800px" height="800px" viewBox="0 0 36 36" version="1.1"  preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
