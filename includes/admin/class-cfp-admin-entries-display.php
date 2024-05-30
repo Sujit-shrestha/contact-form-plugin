@@ -175,7 +175,7 @@
     
           $formEntriesDisplay -> render_table_template (
             array(
-              "searchKeyword" => $_POST["data"],
+              "searchKeyword" => $_POST["searchKeyword"],
             )
           ); 
   }
@@ -189,7 +189,8 @@
     $formEntriesDisplay -> render_table_rows(
       array(
         "orderby"       => $_POST["orderby"],
-        "sortorder"     => $_POST["sortby"]
+        "sortorder"     => $_POST["sortby"],
+        "searchKeyword" => $_POST["searchKeyword"]
       )
     );
 
