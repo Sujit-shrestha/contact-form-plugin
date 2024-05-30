@@ -41,7 +41,7 @@ defined('ABSPATH') || exit;
           </tr>
           <tr>
             <td class="px-6 py-3 " colspan="2">
-              <span id="cfp_validation_message_displayer_name" > </span>
+              <span id="cfp_validation_message_displayer_name" class="cfp_validation_message_display_frontend" > </span>
             </td>
           </tr>
 
@@ -57,7 +57,7 @@ defined('ABSPATH') || exit;
           </tr>
           <tr>
             <td class="px-6 py-3 " colspan="2">
-              <span id="cfp_validation_message_displayer_email" > </span>
+              <span id="cfp_validation_message_displayer_email" class="cfp_validation_message_display_frontend"> </span>
             </td>
           </tr>
 
@@ -73,7 +73,7 @@ defined('ABSPATH') || exit;
           </tr>
           <tr>
             <td class="px-6 py-3 " colspan="2">
-              <span id="cfp_validation_message_displayer_subject" > </span>
+              <span id="cfp_validation_message_displayer_subject" class="cfp_validation_message_display_frontend"> </span>
             </td>
           </tr>
 
@@ -90,7 +90,7 @@ defined('ABSPATH') || exit;
           </tr>
           <tr>
             <td class="px-6 py-3 " colspan="2">
-              <span id="cfp_validation_message_displayer_message" > </span>
+              <span id="cfp_validation_message_displayer_message" class="cfp_validation_message_display_frontend"> </span>
             </td>
           </tr>
 
@@ -104,7 +104,7 @@ defined('ABSPATH') || exit;
 
           <tr>
             <td class="px-6 py-3 " colspan="2">
-              <span id="cfp_validation_message_displayer_default" > </span>
+              <span id="cfp_validation_message_displayer_default" class="cfp_validation_message_display_frontend"> </span>
             </td>
           </tr>
 

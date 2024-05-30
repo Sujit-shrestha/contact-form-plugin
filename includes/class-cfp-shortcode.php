@@ -24,19 +24,18 @@
      */
 
     add_action( 'init' , array( $this , 'shortcode_define' ) );
-
     add_action( 'wp_enqueue_scripts' , array( $this , 'enqueueCpfFormHandlerScripts' ) );
 
     //form action handler
     add_action( 'wp_ajax_submit_cfp_form_action' , array ( 'CFP_Formhandler' , 'handleForm'  ) );
-    
+    add_action( 'wp_ajax_nopriv_submit_cfp_form_action' , array ( 'CFP_Formhandler' , 'handleForm'  ) );
 
    }
 
   /**
    * Defining shortcode as [Cfp_form_code]
    * 
-   * 
+   * @since 1.0.1
    */
   public function shortcode_define (  ) {
     
@@ -47,6 +46,9 @@
    * Gets template for the form
    * 
    * Returns a php file with html template
+   * 
+   * @since 1.0.1
+   * @return mixed
    */
 
    public function getCFPFormTemplate ( ) {
@@ -59,11 +61,16 @@
    /**
     * Gets the form handling scripts
 
-    *@return void
+    * @since 1.0.1
+    * @return void
     */
     public function enqueueCpfFormHandlerScripts () {
 
+      //script for the form
       wp_enqueue_script( 'customjs' , plugins_url( 'contact-form-plugin/public/js/cfp-form-handler.js' , 'contact-form-plugin' ) , [ 'jquery' ] , '1.0.1' );
+
+      //style
+      wp_enqueue_style( 'frontend_form_css' , plugins_url( 'contact-form-plugin/public/css/cfp-form-handler.css' , 'contact-form-plugin' ));
 
       //localization for ajax request 
       wp_localize_script(
@@ -77,14 +84,4 @@
       );
 
     }
-    /**
-     * Handling of the data form the form 
-     */
-    public function handleFormData () {
-
-      $formHandler = new CFP_Formhandler ( );
-
-
-    }
-
  }
