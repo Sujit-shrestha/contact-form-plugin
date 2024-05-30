@@ -60,8 +60,8 @@ defined('ABSPATH') || exit;
   public function render_search_template (){
 
     ?>
-    <label for="Search" ><?php  _e("Search:" , CFP_text_domain) ?></label>
-    <input id="cfp_form_entry_search" type="text" placeholder="<?php  _e("Type here to search..." , CFP_text_domain) ?>" />
+    <label for="Search" ><?php  _e("Search:" , CFP_TEXT_DOMAIN) ?></label>
+    <input id="cfp_form_entry_search" type="text" placeholder="<?php  _e("Type here to search..." , CFP_TEXT_DOMAIN) ?>" />
   
     </br></br>
     <?php
@@ -104,7 +104,7 @@ defined('ABSPATH') || exit;
       
         <th id="cfp_table_entries_<?php echo $col ?>" >
           <?php
-           esc_html_e($displayName[$col] ?? $col , CFP_text_domain );
+           esc_html_e($displayName[$col] ?? $col , CFP_TEXT_DOMAIN );
            do_action('cfp_admin_entires_during_table_columns_filling' , $col);
           ?>
         </th>
@@ -143,14 +143,14 @@ defined('ABSPATH') || exit;
     ?>
       <tr class="table_class_row">
         <td>
-          <?php esc_html_e($count , CFP_text_domain) ?>
+          <?php esc_html_e($count , CFP_TEXT_DOMAIN) ?>
         </td>
         <?php
         foreach( $row as $unit ) {
         ?> 
           <td>
             <?php 
-            esc_html_e($unit , CFP_text_domain);
+            esc_html_e($unit , CFP_TEXT_DOMAIN);
             ?>
           </td>
       
@@ -214,7 +214,7 @@ defined('ABSPATH') || exit;
             array(
               "searchKeyword" => esc_html__( 
                    sanitize_text_field($_POST["searchKeyword"] ) ,
-                CFP_text_domain  ),
+                CFP_TEXT_DOMAIN  ),
             )
           ); 
   }

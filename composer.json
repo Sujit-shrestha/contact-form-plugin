@@ -1,0 +1,15 @@
+{
+    "name": "contact-form-plugin/contact-form-plugin",
+    "autoload": {
+        "psr-4": {
+            "ContactFormPlugin\\ContactFormPlugin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sujit Shrestha",
+            "email": "sujitshrestha0004@gmal.com"
+        }
+    ],
+    "require": {}
+}

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
   
 
  class CFP_Entries_Display_using_WPListTable extends \WP_List_Table  {
-  public $plugin_text_domain = CFP_text_domain ;
+  public $plugin_text_domain = CFP_TEXT_DOMAIN ;
 
   
 

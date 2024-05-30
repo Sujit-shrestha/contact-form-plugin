@@ -48,8 +48,8 @@ defined('ABSPATH') || exit;
    */
   public function admin_menu () {
     add_menu_page (
-      esc_html__( 'CFP Forms' , CFP_text_domain ),
-      esc_html__( 'CFP Forms' , CFP_text_domain),
+      esc_html__( 'CFP Forms' , CFP_TEXT_DOMAIN ),
+      esc_html__( 'CFP Forms' , CFP_TEXT_DOMAIN),
       'manage_options' ,
       'cfp_admin_main_menu',
       null ,
@@ -62,8 +62,8 @@ defined('ABSPATH') || exit;
     
     add_submenu_page(
       'cfp_admin_main_menu',
-      esc_html__( "Entries" , CFP_text_domain ),
-      esc_html__( "Entries" , CFP_text_domain ),
+      esc_html__( "Entries" , CFP_TEXT_DOMAIN ),
+      esc_html__( "Entries" , CFP_TEXT_DOMAIN ),
       'manage_options' ,
       'cfp_admin_main_menu',
       array( $this , 'displayData' ) ,
@@ -89,7 +89,7 @@ defined('ABSPATH') || exit;
     $formEntriesDisplay =  CFP_Display_Entries :: getInstance ( );
     ?>
      <div class="wrap">
-           <h2><?php esc_html_e("Form Entries" , CFP_text_domain);?></h2>
+           <h2><?php esc_html_e("Form Entries" , CFP_TEXT_DOMAIN);?></h2>
            <?php $formEntriesDisplay -> init (); ?>
        </div>
     <?php
@@ -107,7 +107,7 @@ defined('ABSPATH') || exit;
    ?>
        <div class="wrap">
            <div id="icon-users" class="icon32"></div>
-           <h2><?php esc_html_e('Example List Table Page' , CFP_text_domain ); ?></h2>
+           <h2><?php esc_html_e('Example List Table Page' , CFP_TEXT_DOMAIN ); ?></h2>
            <?php $exampleListTable->display(); ?>
            
        </div>
