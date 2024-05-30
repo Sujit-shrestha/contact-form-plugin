@@ -1,5 +1,5 @@
 <?php 
-
+defined('ABSPATH') || exit;
 /**
  * Handles display of table data
  */

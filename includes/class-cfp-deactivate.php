@@ -1,5 +1,5 @@
 <?php 
-
+defined('ABSPATH') || exit;
 /**
  * Class for handling deactivation jobs in the CFP plugin
  * 

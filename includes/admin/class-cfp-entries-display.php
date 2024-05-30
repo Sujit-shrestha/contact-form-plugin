@@ -1,5 +1,5 @@
 <?php 
-
+defined('ABSPATH') || exit;
 /**
  * Handles displaying of entries 
  * 

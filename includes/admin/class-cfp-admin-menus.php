@@ -1,5 +1,5 @@
 <?php
-
+defined('ABSPATH') || exit;
 /**
  * Creates admin menus in admin dashboard.
  * 
