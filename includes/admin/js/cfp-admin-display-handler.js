@@ -19,7 +19,7 @@ jQuery( document ).on( "keyup" , '#cfp_form_entry_search', function( e ) {
         jQuery("#cfp_show_nonce_error_message").text(result.data.message  );
   
       }else{
-        jQuery("#cfp_table_entries").html( result  );
+        jQuery("#cfp_table_rows").html( result  );
       }
     }
   });

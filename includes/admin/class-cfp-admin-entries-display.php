@@ -98,7 +98,6 @@
 </body>
 
 </html>
-
 <?php
 
   }
@@ -170,7 +169,7 @@
       
     $formEntriesDisplay = new self();
     
-          $formEntriesDisplay -> render_table_template (
+          $formEntriesDisplay -> render_table_rows (
             array(
               "searchKeyword" => esc_html__( 
                    sanitize_text_field($_POST["searchKeyword"] ) ,
