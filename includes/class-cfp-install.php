@@ -70,7 +70,7 @@
             email varchar(40) NOT NULL,
             subject varchar(400) ,
             message TEXT,
-            form_creted_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            form_created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
          )
          ";
 

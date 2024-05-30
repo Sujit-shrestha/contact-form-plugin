@@ -10,7 +10,8 @@
    */
   public function __construct ( ) {
 
-    add_action( 'during_table_columns_filling' , array( $this , 'render_sorting_button' ) );
+    add_action( 'cfp_admin_entires_during_table_columns_filling' , array( $this , 'render_sorting_button' ) );
+    add_action( 'cfp_admin_entries_render_search_template' , array( $this , 'render_search_template' ) );
   }
 
   /**
@@ -21,7 +22,7 @@
   public function init () {
 
    //render search area
-    $this -> render_search_template();
+    do_action( 'cfp_admin_entries_render_search_template'  );
 
    //render table
     $this -> render_table_template ();
@@ -51,45 +52,22 @@
 
     $dbOps           = CFP_DbOperations :: getInstance ( ) ;
     $columsAvailable = $dbOps -> get_columns ( ) ;
+    $displayName = array( 
+      "entry_id"        => "Entry ID" ,
+      "form_id"         => "Form ID" ,
+      "user_id"         => "User ID" ,
+      "name"            => "Name" ,
+      "subject"         => "Subject" ,
+      "message"         => "Message" ,
+      "form_created_at" => "Form Created At"
+    );
 
-    $dataAvailable   = $dbOps -> get_data ( $constraints ) ;
   ?>
 
 <!DOCTYPE html>
 <html>
 
-<head>
-  <style>
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-      table-layout: auto;
-    }
 
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
-    #svg_cfp {
-      height: 20px;
-      padding: 10 10;
-    }
-
-    #cfp_show_nonce_error_message {
-      color: red
-    }
-
-  </style>
-</head>
-
-<BR>
   <span id="cfp_show_nonce_error_message"></span>
   <table id="cfp_table_entries">
     <tr>
@@ -101,24 +79,21 @@
       ?>
       
         <th id="cfp_table_entries_<?php echo $col ?>" >
-
           <?php
-           esc_html_e($col , CFP_text_domain );
-           do_action('during_table_columns_filling' , $col);
-           
+           esc_html_e($displayName[$col] ?? $col , CFP_text_domain );
+           do_action('cfp_admin_entires_during_table_columns_filling' , $col);
           ?>
-
         </th>
 
       <?php
       }
       ?>
     </tr>
-      <tbody id="cfp_table_rows" >
+    <tbody id="cfp_table_rows" >
       <?php 
       $this->render_table_rows( $constraints );
       ?>
-      </tbody>
+    </tbody>
   </table>
 </body>
 
@@ -169,12 +144,15 @@
     //script
     wp_enqueue_script( 'admin_search_js' , plugins_url( 'contact-form-plugin/includes/admin/js/cfp-admin-display-handler.js' , 'contact-form-plugin' ) , [ 'jquery' ] , '1.0.1' );
 
-     //localization for ajax request 
+    //styles
+    wp_enqueue_style('entries_table_css' , plugins_url( 'contact-form-plugin/includes/admin/css/cfp-admin-entries.css' , 'contact-form-plugin' ) ) ;
+
+    //localization for ajax request 
     wp_localize_script(
       'admin_search_js' ,
       'cfp_jquery_object',
       array (  
-        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'ajax_url'         => admin_url( 'admin-ajax.php' ),
         'cfp_nonce_search' => wp_create_nonce ( 'wp_ajax_admin_search_sort_secure_themegrill9988' )
       )
     );
@@ -182,6 +160,7 @@
 
   /**
    * Handles search in the admin entries display
+   * 
    */
   public static function handle_search() {
 
@@ -190,16 +169,18 @@
     );
       
     $formEntriesDisplay = new self();
-    error_log( print_r( $_POST  , true) );
     
           $formEntriesDisplay -> render_table_template (
             array(
-              "searchKeyword" => sanitize_text_field($_POST["searchKeyword"]),
+              "searchKeyword" => esc_html__( 
+                   sanitize_text_field($_POST["searchKeyword"] ) ,
+                CFP_text_domain  ),
             )
           ); 
   }
   /**
    * Handles sorting in the admin entries
+   * 
    */
   public static function handle_sort () {
     self:: verify_nonce(
@@ -214,13 +195,11 @@
         "searchKeyword" => sanitize_text_field($_POST["searchKeyword"])
       )
     );
-
-
-
   }
 
   /**
-   * Conditionally reders soritng button 
+   * Conditionally reders soritng button on the required column id as provided in $args
+   * 
    */
   public function render_sorting_button($args){
     
@@ -228,10 +207,8 @@
     
     if( in_array( $args , $addSortingButtonOn ) ) {
        ?><span class="cfp_sorting_unit" id="<?php echo $args ?>">
-        <svg id="svg_cfp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>
+        <svg id="svg_cfp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>
        </span>
-       
-
        <?php
     }
   }
