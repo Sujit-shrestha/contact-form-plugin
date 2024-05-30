@@ -108,9 +108,6 @@ class CFP_DbOperations {
     );
 
     $parameter = array_merge($defaultConstraints , $options);
-    
-        error_log( print_r($options , true) );
-
 
     $query = "
     SELECT * FROM $tableName 
