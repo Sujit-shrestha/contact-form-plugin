@@ -13,11 +13,17 @@ jQuery( document ).on( "keyup" , '#cfp_form_entry_search', function( e ) {
     type: 'post',
 
     success : function ( result ) {
-    jQuery("#cfp_table_entries").html( result  );
-    }
 
+      if(typeof(result.success) != "undefined" && result.success !== null) {
+
+        jQuery("#cfp_show_nonce_error_message").text(result.data.message  );
+  
+      }else{
+        jQuery("#cfp_table_entries").html( result  );
+      }
+    }
   });
-} );
+});
 
 jQuery( document ).on( "click" , '.cfp_sorting_unit' ,
 function ( e ) {
@@ -52,12 +58,15 @@ jQuery.ajax({
   type: 'post',
 
   success : function ( result ) {
-  jQuery("#cfp_table_rows").html( result  );
+   
+    if(typeof(result.success) != "undefined" && result.success !== null) {
+
+      jQuery("#cfp_show_nonce_error_message").text(result.data.message  );
+
+    }else{
+        jQuery("#cfp_table_rows").html( result  );
+    }
   }
+});
 
 });
-  
-  
-}
-
-);

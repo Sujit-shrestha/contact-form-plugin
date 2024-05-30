@@ -21,9 +21,9 @@
   public function init () {
 
    //render search area
-   $this -> render_search_template();
+    $this -> render_search_template();
 
-    //render table
+   //render table
     $this -> render_table_template ();
   
 
@@ -81,15 +81,25 @@
       height: 20px;
       padding: 10 10;
     }
+
+    #cfp_show_nonce_error_message {
+      color: red
+    }
+
   </style>
 </head>
 
-<body>
+<BR>
+  <span id="cfp_show_nonce_error_message"></span>
   <table id="cfp_table_entries">
     <tr>
+    <th>
+        SN.
+    </th>
       <?php 
       foreach( $columsAvailable as $col){
       ?>
+      
         <th id="cfp_table_entries_<?php echo $col ?>" >
 
           <?php
@@ -125,13 +135,17 @@
     $dbOps           = CFP_DbOperations :: getInstance ( ) ;
     $dataAvailable   = $dbOps -> get_data ( $constraints ) ;
 
-   
+    $count = 0;
     foreach( $dataAvailable as $row ){
+      $count ++;
     ?>
       <tr class="table_class_row">
+        <td>
+          <?php esc_html_e($count , CFP_text_domain) ?>
+        </td>
         <?php
         foreach( $row as $unit ) {
-        ?>
+        ?> 
           <td>
             <?php 
             esc_html_e($unit , CFP_text_domain);
@@ -161,7 +175,7 @@
       'cfp_jquery_object',
       array (  
         'ajax_url' => admin_url( 'admin-ajax.php' ),
-        'cfp_nonce_search' => wp_create_nonce ( 'wp_ajax_admin_search_secure_themegrill9988' )
+        'cfp_nonce_search' => wp_create_nonce ( 'wp_ajax_admin_search_sort_secure_themegrill9988' )
       )
     );
   }
@@ -170,12 +184,17 @@
    * Handles search in the admin entries display
    */
   public static function handle_search() {
+
+    self:: verify_nonce(
+      $_POST["nonce"]
+    );
       
     $formEntriesDisplay = new self();
+    error_log( print_r( $_POST  , true) );
     
           $formEntriesDisplay -> render_table_template (
             array(
-              "searchKeyword" => $_POST["searchKeyword"],
+              "searchKeyword" => sanitize_text_field($_POST["searchKeyword"]),
             )
           ); 
   }
@@ -183,14 +202,16 @@
    * Handles sorting in the admin entries
    */
   public static function handle_sort () {
+    self:: verify_nonce(
+      $_POST["nonce"]
+    );
     $formEntriesDisplay = new self () ;
-    // error_log( print_r ( "reached here" , true ) );
     
     $formEntriesDisplay -> render_table_rows(
       array(
-        "orderby"       => $_POST["orderby"],
-        "sortorder"     => $_POST["sortby"],
-        "searchKeyword" => $_POST["searchKeyword"]
+        "orderby"       => sanitize_text_field($_POST["orderby"]),
+        "sortorder"     => sanitize_text_field($_POST["sortby"]),
+        "searchKeyword" => sanitize_text_field($_POST["searchKeyword"])
       )
     );
 
@@ -213,5 +234,21 @@
 
        <?php
     }
+  }
+
+    /**
+   * Verifies the nonce provided to the form
+   */
+  private static function verify_nonce ( $nonce) {
+
+    if ( ! wp_verify_nonce( $nonce , 'wp_ajax_admin_search_sort_secure_themegrill9988') ) {
+      wp_send_json_error( 
+        array ( 
+          "message"                 => esc_html__ ( "* Nonce not verified. Please reload."  , 'contact-form-plugin-cfp-themegrill' ),
+         )
+       );
+       exit;
+    }
+
   }
  }
