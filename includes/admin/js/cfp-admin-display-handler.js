@@ -40,7 +40,7 @@ console.log($sortstatus);
 jQuery.ajax({
   url:cfp_jquery_object.ajax_url,
 
-  DESCata: {
+  data: {
     'sortby'   : $sortstatus,
     'orderby'  : $orderby,
     'action' : 'admin_entries_sort_action',

@@ -10,7 +10,7 @@
    */
   public function __construct ( ) {
 
-    add_action( 'after_table_columns_filled' , array( $this , 'render_sorting_button' ) );
+    add_action( 'during_table_columns_filling' , array( $this , 'render_sorting_button' ) );
   }
 
   /**
@@ -77,6 +77,10 @@
     tr:nth-child(even) {
       background-color: #dddddd;
     }
+    #svg_cfp {
+      height: 20px;
+      padding: 10 10;
+    }
   </style>
 </head>
 
@@ -87,18 +91,24 @@
       foreach( $columsAvailable as $col){
       ?>
         <th id="cfp_table_entries_<?php echo $col ?>" >
+
           <?php
            esc_html_e($col , CFP_text_domain );
-           do_action('after_table_columns_filled' , $col);
+           do_action('during_table_columns_filling' , $col);
+           
           ?>
+
         </th>
+
       <?php
       }
       ?>
     </tr>
-      <?php
-    $this->render_table_rows( $constraints );
-    ?>
+      <tbody id="cfp_table_rows" >
+      <?php 
+      $this->render_table_rows( $constraints );
+      ?>
+      </tbody>
   </table>
 </body>
 
@@ -115,12 +125,10 @@
     $dbOps           = CFP_DbOperations :: getInstance ( ) ;
     $dataAvailable   = $dbOps -> get_data ( $constraints ) ;
 
-    ?>
-    <div id="cfp_table_rows" >
-    <?php 
+   
     foreach( $dataAvailable as $row ){
     ?>
-      <tr>
+      <tr class="table_class_row">
         <?php
         foreach( $row as $unit ) {
         ?>
@@ -136,9 +144,7 @@
       </tr>
     <?php
     }
-    ?>
-  </div>
-  <?php
+   
   }
 
   /**
@@ -178,6 +184,7 @@
    */
   public static function handle_sort () {
     $formEntriesDisplay = new self () ;
+    // error_log( print_r ( "reached here" , true ) );
     
     $formEntriesDisplay -> render_table_rows(
       array(
@@ -199,7 +206,7 @@
     
     if( in_array( $args , $addSortingButtonOn ) ) {
        ?><span class="cfp_sorting_unit" id="<?php echo $args ?>">
-        <img src="contact-form-plugin\assets\sort.svg"/>
+        <svg id="svg_cfp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>
        </span>
        
 
